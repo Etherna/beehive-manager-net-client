@@ -1,0 +1,54 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.32126.315
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BeehiveManagerNetClient", "src\BeehiveManagerNetClient\BeehiveManagerNetClient.csproj", "{F445E275-57EF-4C9F-8E38-AF77127EFA23}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{0BA43445-D2E7-489C-9C14-3A6E49035684}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+		.gitignore = .gitignore
+		BeehiveManagerNetClient.sln.licenseheader = BeehiveManagerNetClient.sln.licenseheader
+		CODE_OF_CONDUCT.md = CODE_OF_CONDUCT.md
+		CONTRIBUTING.md = CONTRIBUTING.md
+		LICENSE = LICENSE
+		README.md = README.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{CC4609AC-3FF0-4298-8638-AE5164350F9C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tools", "tools", "{47039B3D-E182-42E0-9B11-0CFA7A453E99}"
+	ProjectSection(SolutionItems) = preProject
+		tools\beehive-manager-api.nswag = tools\beehive-manager-api.nswag
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{CEA3160A-AE3D-4492-9EC1-ACE819417CA0}"
+	ProjectSection(SolutionItems) = preProject
+		.github\workflows\myget-unstable-deploy.yml = .github\workflows\myget-unstable-deploy.yml
+		.github\workflows\nuget-stable-deploy.yml = .github\workflows\nuget-stable-deploy.yml
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F445E275-57EF-4C9F-8E38-AF77127EFA23}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F445E275-57EF-4C9F-8E38-AF77127EFA23}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F445E275-57EF-4C9F-8E38-AF77127EFA23}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F445E275-57EF-4C9F-8E38-AF77127EFA23}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{F445E275-57EF-4C9F-8E38-AF77127EFA23} = {CC4609AC-3FF0-4298-8638-AE5164350F9C}
+		{47039B3D-E182-42E0-9B11-0CFA7A453E99} = {0BA43445-D2E7-489C-9C14-3A6E49035684}
+		{CEA3160A-AE3D-4492-9EC1-ACE819417CA0} = {0BA43445-D2E7-489C-9C14-3A6E49035684}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {5063AF6A-6E11-4D49-92D3-7DAF6AE1DAA3}
+	EndGlobalSection
+EndGlobal
