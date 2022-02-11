@@ -3,7 +3,7 @@
   <PropertyGroup>
 	  <TargetFramework>netstandard2.0</TargetFramework>
 	  <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-	  <RootNamespace>Etherna.BeehiveManager.Client</RootNamespace>
+	  <RootNamespace>Etherna.BeehiveManagerClient</RootNamespace>
 
 	  <Authors>Etherna Sagl</Authors>
 	  <Description>A .Net client for Beehive Manager</Description>
@@ -28,6 +28,11 @@
       <Pack>True</Pack>
       <PackagePath></PackagePath>
     </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
+    <PackageReference Include="System.Text.Json" Version="6.0.2" />
   </ItemGroup>
 
 </Project>

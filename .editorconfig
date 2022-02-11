@@ -15,3 +15,6 @@ indent_size = 2
 
 # C# files
 [*.cs]
+
+# CA1707: Remove the underscores from namespace name
+dotnet_diagnostic.CA1707.severity = none    # Underscores are used for versioning api

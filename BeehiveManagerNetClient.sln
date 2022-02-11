@@ -19,6 +19,9 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{CC4609AC-3FF0-4298-8638-AE5164350F9C}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tools", "tools", "{47039B3D-E182-42E0-9B11-0CFA7A453E99}"
+	ProjectSection(SolutionItems) = preProject
+		tools\beehive-manager-api.nswag = tools\beehive-manager-api.nswag
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{CEA3160A-AE3D-4492-9EC1-ACE819417CA0}"
 	ProjectSection(SolutionItems) = preProject
