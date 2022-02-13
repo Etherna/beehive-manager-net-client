@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 
-namespace Etherna.BeehiveManagerClient.Exceptions
+namespace Etherna.BeehiveManager.NetClient.Exceptions
 {
 #pragma warning disable CA1032 // Implement standard exception constructors
     public partial class BeehiveManagerClientException : Exception

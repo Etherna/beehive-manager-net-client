@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Etherna.BeehiveManagerClient.DtoModels
+namespace Etherna.BeehiveManager.NetClient.DtoModels
 {
     public class PostageBatchDto
     {

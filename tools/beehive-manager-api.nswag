@@ -44,7 +44,7 @@
       "className": "BhmClientGenerated",
       "operationGenerationMode": "SingleClientFromPathSegments",
       "additionalNamespaceUsages": [
-        "Etherna.BeehiveManagerClient.Exceptions"
+        "Etherna.BeehiveManager.NetClient.Exceptions"
       ],
       "additionalContractNamespaceUsages": [],
       "generateOptionalParameters": true,
@@ -58,7 +58,7 @@
       "wrapResponseMethods": [],
       "generateResponseClasses": true,
       "responseClass": "SwaggerResponse",
-      "namespace": "Etherna.BeehiveManagerClient.Generated",
+      "namespace": "Etherna.BeehiveManager.NetClient.Generated",
       "requiredPropertiesMustBeDefined": true,
       "dateType": "System.DateTimeOffset",
       "jsonConverters": null,

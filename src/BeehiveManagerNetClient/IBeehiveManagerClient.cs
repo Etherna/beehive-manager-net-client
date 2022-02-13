@@ -1,11 +1,11 @@
-﻿using Etherna.BeehiveManagerClient.DtoModels;
+﻿using Etherna.BeehiveManager.NetClient.DtoModels;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Etherna.BeehiveManagerClient
+namespace Etherna.BeehiveManager.NetClient
 {
-    public interface IBhmClient
+    public interface IBeehiveManagerClient
     {
         // Properties.
         ApiVersions CurrentApiVersion { get; }

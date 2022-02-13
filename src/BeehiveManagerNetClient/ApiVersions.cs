@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Etherna.BeehiveManagerClient
+﻿namespace Etherna.BeehiveManager.NetClient
 {
     public enum ApiVersions
     {

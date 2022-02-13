@@ -1,18 +1,18 @@
-﻿using Etherna.BeehiveManagerClient.DtoModels;
+﻿using Etherna.BeehiveManager.NetClient.DtoModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Etherna.BeehiveManagerClient
+namespace Etherna.BeehiveManager.NetClient
 {
-    public class BhmClient : IBhmClient
+    public class BeehiveManagerClient : IBeehiveManagerClient
     {
         // Fields.
         private readonly Generated.IBhmClientGenerated client;
 
         // Constructor.
-        public BhmClient(Uri baseUrl, ApiVersions apiVersion)
+        public BeehiveManagerClient(Uri baseUrl, ApiVersions apiVersion)
         {
             if (baseUrl is null)
                 throw new ArgumentNullException(nameof(baseUrl));

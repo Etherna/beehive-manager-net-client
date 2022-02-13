@@ -3,7 +3,7 @@
   <PropertyGroup>
 	  <TargetFramework>netstandard2.0</TargetFramework>
 	  <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-	  <RootNamespace>Etherna.BeehiveManagerClient</RootNamespace>
+	  <RootNamespace>Etherna.BeehiveManager.NetClient</RootNamespace>
 
 	  <Authors>Etherna Sagl</Authors>
 	  <Description>A .Net client for Beehive Manager</Description>
