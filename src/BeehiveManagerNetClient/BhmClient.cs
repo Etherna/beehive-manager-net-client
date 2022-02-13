@@ -12,7 +12,7 @@ namespace Etherna.BeehiveManagerClient
         private readonly Generated.IBhmClientGenerated client;
 
         // Constructor.
-        public BhmClient(Uri baseUrl, ApiVersion apiVersion)
+        public BhmClient(Uri baseUrl, ApiVersions apiVersion = ApiVersions.v0_3_0)
         {
             if (baseUrl is null)
                 throw new ArgumentNullException(nameof(baseUrl));
@@ -22,7 +22,7 @@ namespace Etherna.BeehiveManagerClient
         }
 
         // Properties.
-        public ApiVersion CurrentApiVersion { get; private set; }
+        public ApiVersions CurrentApiVersion { get; private set; }
 
         // Methods.
         public Task<string> BuyNewPostageBatchAsync(
@@ -34,49 +34,49 @@ namespace Etherna.BeehiveManagerClient
             string? nodeId = null) =>
             CurrentApiVersion switch
             {
-                ApiVersion.v0_3_0 => client.ApiV0_3PostageBatchesPostAsync(depth, amount, gasPrice, immutable, label, nodeId),
+                ApiVersions.v0_3_0 => client.ApiV0_3PostageBatchesPostAsync(depth, amount, gasPrice, immutable, label, nodeId),
                 _ => throw new InvalidOperationException()
             };
 
         public async Task<BeeNodeDto> FindNodeAsync(string id) =>
             CurrentApiVersion switch
             {
-                ApiVersion.v0_3_0 => new BeeNodeDto(await client.ApiV0_3NodesGetAsync(id).ConfigureAwait(false)),
+                ApiVersions.v0_3_0 => new BeeNodeDto(await client.ApiV0_3NodesGetAsync(id).ConfigureAwait(false)),
                 _ => throw new InvalidOperationException()
             };
 
         public async Task<PostageBatchDto> GetPostageBatchAsync(string ownerNodeId, string batchId) =>
             CurrentApiVersion switch
             {
-                ApiVersion.v0_3_0 => new PostageBatchDto(await client.ApiV0_3NodesBatchesGetAsync(ownerNodeId, batchId).ConfigureAwait(false)),
+                ApiVersions.v0_3_0 => new PostageBatchDto(await client.ApiV0_3NodesBatchesGetAsync(ownerNodeId, batchId).ConfigureAwait(false)),
                 _ => throw new InvalidOperationException()
             };
 
         public async Task<IEnumerable<PostageBatchDto>> GetPostageBatchesFromAllHealthyNodesAsync() =>
             CurrentApiVersion switch
             {
-                ApiVersion.v0_3_0 => (await client.ApiV0_3PostageBatchesGetAsync().ConfigureAwait(false)).Select(i => new PostageBatchDto(i)),
+                ApiVersions.v0_3_0 => (await client.ApiV0_3PostageBatchesGetAsync().ConfigureAwait(false)).Select(i => new PostageBatchDto(i)),
                 _ => throw new InvalidOperationException()
             };
 
         public async Task<IEnumerable<PostageBatchDto>> GetPostageBatchesOwnedByNodeAsync(string nodeId) =>
             CurrentApiVersion switch
             {
-                ApiVersion.v0_3_0 => (await client.ApiV0_3NodesBatchesGetAsync(nodeId).ConfigureAwait(false)).Select(i => new PostageBatchDto(i)),
+                ApiVersions.v0_3_0 => (await client.ApiV0_3NodesBatchesGetAsync(nodeId).ConfigureAwait(false)).Select(i => new PostageBatchDto(i)),
                 _ => throw new InvalidOperationException()
             };
 
         public async Task<IEnumerable<BeeNodeDto>> GetRegisteredNodesAsync(int? page = null, int? take = null) =>
             CurrentApiVersion switch
             {
-                ApiVersion.v0_3_0 => (await client.ApiV0_3NodesGetAsync(page, take).ConfigureAwait(false)).Select(i => new BeeNodeDto(i)),
+                ApiVersions.v0_3_0 => (await client.ApiV0_3NodesGetAsync(page, take).ConfigureAwait(false)).Select(i => new BeeNodeDto(i)),
                 _ => throw new InvalidOperationException()
             };
 
         public async Task<BeeNodeDto> RegisterNewNodeAsync(int debugApiPort, int gatewayApiPort, Uri url) =>
             CurrentApiVersion switch
             {
-                ApiVersion.v0_3_0 => new BeeNodeDto(await client.ApiV0_3NodesPostAsync(new Generated.BeeNodeInput
+                ApiVersions.v0_3_0 => new BeeNodeDto(await client.ApiV0_3NodesPostAsync(new Generated.BeeNodeInput
                 { 
                     DebugApiPort = debugApiPort,
                     GatewayApiPort = gatewayApiPort,
@@ -88,7 +88,7 @@ namespace Etherna.BeehiveManagerClient
         public Task RemoveNodeAsync(string id) =>
             CurrentApiVersion switch
             {
-                ApiVersion.v0_3_0 => client.ApiV0_3NodesDeleteAsync(id),
+                ApiVersions.v0_3_0 => client.ApiV0_3NodesDeleteAsync(id),
                 _ => throw new InvalidOperationException()
             };
     }

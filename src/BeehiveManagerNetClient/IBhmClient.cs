@@ -8,7 +8,7 @@ namespace Etherna.BeehiveManagerClient
     public interface IBhmClient
     {
         // Properties.
-        ApiVersion CurrentApiVersion { get; }
+        ApiVersions CurrentApiVersion { get; }
 
         /// <summary>
         /// Buy a new postage batch

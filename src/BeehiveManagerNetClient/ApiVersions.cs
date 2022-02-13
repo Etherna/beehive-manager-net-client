@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Etherna.BeehiveManagerClient
 {
-    public enum ApiVersion
+    public enum ApiVersions
     {
         v0_3_0
     }
