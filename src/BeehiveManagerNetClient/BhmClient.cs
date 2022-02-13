@@ -12,7 +12,7 @@ namespace Etherna.BeehiveManagerClient
         private readonly Generated.IBhmClientGenerated client;
 
         // Constructor.
-        public BhmClient(Uri baseUrl, ApiVersions apiVersion = ApiVersions.v0_3_0)
+        public BhmClient(Uri baseUrl, ApiVersions apiVersion)
         {
             if (baseUrl is null)
                 throw new ArgumentNullException(nameof(baseUrl));
