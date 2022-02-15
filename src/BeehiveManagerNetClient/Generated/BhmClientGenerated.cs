@@ -101,7 +101,7 @@ namespace Etherna.BeehiveManager.NetClient.Generated
         /// <param name="nodeId">Bee node Id</param>
         /// <returns>Success</returns>
         /// <exception cref="BeehiveManagerClientException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<string> ApiV0_3PostageBatchesPostAsync(int? amount = null, int? depth = null, int? gasPrice = null, bool? immutable = null, string? label = null, string? nodeId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<string> ApiV0_3PostageBatchesPostAsync(long? amount = null, int? depth = null, long? gasPrice = null, bool? immutable = null, string? label = null, string? nodeId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
     }
 
@@ -767,7 +767,7 @@ namespace Etherna.BeehiveManager.NetClient.Generated
         /// <param name="nodeId">Bee node Id</param>
         /// <returns>Success</returns>
         /// <exception cref="BeehiveManagerClientException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<string> ApiV0_3PostageBatchesPostAsync(int? amount = null, int? depth = null, int? gasPrice = null, bool? immutable = null, string? label = null, string? nodeId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<string> ApiV0_3PostageBatchesPostAsync(long? amount = null, int? depth = null, long? gasPrice = null, bool? immutable = null, string? label = null, string? nodeId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/v0.3/Postage/batches?");
