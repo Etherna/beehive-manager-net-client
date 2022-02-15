@@ -19,8 +19,8 @@ namespace Etherna.BeehiveManager.NetClient
         /// <param name="immutable">Is batch immutable</param>
         /// <param name="label">An optional label for this batch</param>
         /// <param name="nodeId">Bee node Id</param>
-        /// <returns>Success</returns>
-        Task<string> BuyNewPostageBatchAsync(
+        /// <returns>New postage batch reference</returns>
+        Task<PostageBatchRefDto> BuyNewPostageBatchAsync(
             long amount,
             int depth,
             long? gasPrice = null,

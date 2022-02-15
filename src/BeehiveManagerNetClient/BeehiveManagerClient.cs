@@ -25,7 +25,7 @@ namespace Etherna.BeehiveManager.NetClient
         public ApiVersions CurrentApiVersion { get; private set; }
 
         // Methods.
-        public Task<string> BuyNewPostageBatchAsync(
+        public async Task<PostageBatchRefDto> BuyNewPostageBatchAsync(
             long amount,
             int depth,
             long? gasPrice = null,
@@ -34,7 +34,7 @@ namespace Etherna.BeehiveManager.NetClient
             string? nodeId = null) =>
             CurrentApiVersion switch
             {
-                ApiVersions.v0_3_0 => client.ApiV0_3PostageBatchesPostAsync(amount, depth, gasPrice, immutable, label, nodeId),
+                ApiVersions.v0_3_0 => new PostageBatchRefDto(await client.ApiV0_3PostageBatchesPostAsync(amount, depth, gasPrice, immutable, label, nodeId).ConfigureAwait(false)),
                 _ => throw new InvalidOperationException()
             };
 

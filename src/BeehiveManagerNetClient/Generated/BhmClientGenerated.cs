@@ -101,7 +101,7 @@ namespace Etherna.BeehiveManager.NetClient.Generated
         /// <param name="nodeId">Bee node Id</param>
         /// <returns>Success</returns>
         /// <exception cref="BeehiveManagerClientException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<string> ApiV0_3PostageBatchesPostAsync(long? amount = null, int? depth = null, long? gasPrice = null, bool? immutable = null, string? label = null, string? nodeId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<PostageBatchRefDto> ApiV0_3PostageBatchesPostAsync(long? amount = null, int? depth = null, long? gasPrice = null, bool? immutable = null, string? label = null, string? nodeId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
     }
 
@@ -767,7 +767,7 @@ namespace Etherna.BeehiveManager.NetClient.Generated
         /// <param name="nodeId">Bee node Id</param>
         /// <returns>Success</returns>
         /// <exception cref="BeehiveManagerClientException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<string> ApiV0_3PostageBatchesPostAsync(long? amount = null, int? depth = null, long? gasPrice = null, bool? immutable = null, string? label = null, string? nodeId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<PostageBatchRefDto> ApiV0_3PostageBatchesPostAsync(long? amount = null, int? depth = null, long? gasPrice = null, bool? immutable = null, string? label = null, string? nodeId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/v0.3/Postage/batches?");
@@ -830,7 +830,7 @@ namespace Etherna.BeehiveManager.NetClient.Generated
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<string>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<PostageBatchRefDto>(response_, headers_, cancellationToken).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new BeehiveManagerClientException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -1067,6 +1067,18 @@ namespace Etherna.BeehiveManager.NetClient.Generated
 
         [System.Text.Json.Serialization.JsonPropertyName("utilization")]
         public int? Utilization { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.15.9.0 (NJsonSchema v10.6.8.0 (Newtonsoft.Json v12.0.0.0))")]
+    internal partial class PostageBatchRefDto
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("batchId")]
+        public string? BatchId { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("nodeId")]
+        public string? NodeId { get; set; } = default!;
 
     }
 
