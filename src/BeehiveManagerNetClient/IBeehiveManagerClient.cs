@@ -21,9 +21,9 @@ namespace Etherna.BeehiveManager.NetClient
         /// <param name="nodeId">Bee node Id</param>
         /// <returns>Success</returns>
         Task<string> BuyNewPostageBatchAsync(
-            int amount,
+            long amount,
             int depth,
-            int? gasPrice = null,
+            long? gasPrice = null,
             bool immutable = false,
             string? label = null,
             string? nodeId = null);

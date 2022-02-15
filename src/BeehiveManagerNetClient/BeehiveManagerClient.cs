@@ -26,15 +26,15 @@ namespace Etherna.BeehiveManager.NetClient
 
         // Methods.
         public Task<string> BuyNewPostageBatchAsync(
-            int amount,
+            long amount,
             int depth,
-            int? gasPrice = null,
+            long? gasPrice = null,
             bool immutable = false,
             string? label = null,
             string? nodeId = null) =>
             CurrentApiVersion switch
             {
-                ApiVersions.v0_3_0 => client.ApiV0_3PostageBatchesPostAsync(depth, amount, gasPrice, immutable, label, nodeId),
+                ApiVersions.v0_3_0 => client.ApiV0_3PostageBatchesPostAsync(amount, depth, gasPrice, immutable, label, nodeId),
                 _ => throw new InvalidOperationException()
             };
 
