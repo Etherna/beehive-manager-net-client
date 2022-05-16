@@ -11,7 +11,6 @@ namespace Etherna.BeehiveManager.NetClient.DtoModels
                 throw new ArgumentNullException(nameof(postageBatch));
 
             Id = postageBatch.Id!;
-            AmountPaid = postageBatch.AmountPaid;
             BatchTTL = postageBatch.BatchTTL;
             BlockNumber = postageBatch.BlockNumber;
             BucketDepth = postageBatch.BucketDepth;
@@ -22,11 +21,12 @@ namespace Etherna.BeehiveManager.NetClient.DtoModels
             OwnerAddress = postageBatch.OwnerAddress;
             Usable = postageBatch.Usable;
             Utilization = postageBatch.Utilization;
+            Value = postageBatch.Value;
         }
 
         // Properties.
         public string Id { get; }
-        public long? AmountPaid { get; }
+        public long? Value { get; }
         public int BatchTTL { get; }
         public int BlockNumber { get; }
         public int BucketDepth { get; }
