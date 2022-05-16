@@ -1,0 +1,20 @@
+# Remove the line below if you want to inherit .editorconfig settings from higher directories
+root = true
+
+#### Define style ####
+
+# All files
+[*]
+indent_style = space
+
+# C# Project files
+[*.csproj]
+indent_size = 2
+
+#### Suppress warnings ####
+
+# C# files
+[*.cs]
+
+# CA1707: Remove the underscores from namespace name
+dotnet_diagnostic.CA1707.severity = none    # Underscores are used for versioning api
