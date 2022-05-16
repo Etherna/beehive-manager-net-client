@@ -31,9 +31,36 @@ namespace Etherna.BeehiveManager.NetClient
         /// <summary>
         /// Get node info by its id
         /// </summary>
-        /// <param name="id">Id of the bee node</param>
+        /// <param name="nodeId">Id of the bee node</param>
         /// <returns>Bee node info</returns>
-        Task<BeeNodeDto> FindNodeAsync(string id);
+        Task<BeeNodeDto> FindNodeAsync(string nodeId);
+
+        /// <summary>
+        /// Find bee node info by an owned postage batch Id
+        /// </summary>
+        /// <param name="batchId">Id of the postage batch</param>
+        /// <returns>Bee node info</returns>
+        Task<BeeNodeDto> FindNodeOwnerOfPostageBatchAsync(string batchId);
+
+        /// <summary>
+        /// Force full status refresh on a Bee node
+        /// </summary>
+        /// <param name="id">Id of the bee node</param>
+        /// <returns>True if node was alive</returns>
+        Task<bool> ForceNodeFullStatusRefreshAsync(string nodeId);
+
+        /// <summary>
+        /// Get live status of all Bee node
+        /// </summary>
+        /// <returns>Live status of all nodes</returns>
+        Task<IEnumerable<BeeNodeStatusDto>> GetAllBeeNodeLiveStatus();
+
+        /// <summary>
+        /// Get live status of a Bee node
+        /// </summary>
+        /// <param name="id">Id of the bee node</param>
+        /// <returns>Live status of the node</returns>
+        Task<BeeNodeStatusDto> GetNodeLiveStatusAsync(string nodeId);
 
         /// <summary>
         /// Find details of a postage batch owned by a node
@@ -42,12 +69,6 @@ namespace Etherna.BeehiveManager.NetClient
         /// <param name="batchId">Postage Batch Id</param>
         /// <returns>Success</returns>
         Task<PostageBatchDto> GetPostageBatchAsync(string ownerNodeId, string batchId);
-
-        /// <summary>
-        /// Get all postage batches from all healthy nodes
-        /// </summary>
-        /// <returns>Success</returns>
-        Task<IEnumerable<PostageBatchDto>> GetPostageBatchesFromAllHealthyNodesAsync();
 
         /// <summary>
         /// Get all postage batches owned by a node

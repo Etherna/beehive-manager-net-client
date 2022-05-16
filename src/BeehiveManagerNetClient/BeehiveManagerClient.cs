@@ -34,14 +34,42 @@ namespace Etherna.BeehiveManager.NetClient
             string? nodeId = null) =>
             CurrentApiVersion switch
             {
-                ApiVersions.v0_3_0 => new PostageBatchRefDto(await client.ApiV0_3PostageBatchesPostAsync(amount, depth, gasPrice, immutable, label, nodeId).ConfigureAwait(false)),
+                ApiVersions.v0_3_0 => new PostageBatchRefDto(await client.ApiV0_3PostageBatchesAsync(amount, depth, gasPrice, immutable, label, nodeId).ConfigureAwait(false)),
                 _ => throw new InvalidOperationException()
             };
 
-        public async Task<BeeNodeDto> FindNodeAsync(string id) =>
+        public async Task<BeeNodeDto> FindNodeAsync(string nodeId) =>
             CurrentApiVersion switch
             {
-                ApiVersions.v0_3_0 => new BeeNodeDto(await client.ApiV0_3NodesGetAsync(id).ConfigureAwait(false)),
+                ApiVersions.v0_3_0 => new BeeNodeDto(await client.ApiV0_3NodesGetAsync(nodeId).ConfigureAwait(false)),
+                _ => throw new InvalidOperationException()
+            };
+
+        public async Task<BeeNodeDto> FindNodeOwnerOfPostageBatchAsync(string batchId) =>
+            CurrentApiVersion switch
+            {
+                ApiVersions.v0_3_0 => new BeeNodeDto(await client.ApiV0_3PostageBatchesNodeAsync(batchId).ConfigureAwait(false)),
+                _ => throw new InvalidOperationException()
+            };
+
+        public async Task<bool> ForceNodeFullStatusRefreshAsync(string nodeId) =>
+            CurrentApiVersion switch
+            {
+                ApiVersions.v0_3_0 => await client.ApiV0_3NodesStatusPutAsync(nodeId).ConfigureAwait(false),
+                _ => throw new InvalidOperationException()
+            };
+
+        public async Task<IEnumerable<BeeNodeStatusDto>> GetAllBeeNodeLiveStatus() =>
+            CurrentApiVersion switch
+            {
+                ApiVersions.v0_3_0 => (await client.ApiV0_3NodesStatusGetAsync().ConfigureAwait(false)).Select(s => new BeeNodeStatusDto(s)),
+                _ => throw new InvalidOperationException()
+            };
+
+        public async Task<BeeNodeStatusDto> GetNodeLiveStatusAsync(string nodeId) =>
+            CurrentApiVersion switch
+            {
+                ApiVersions.v0_3_0 => new BeeNodeStatusDto(await client.ApiV0_3NodesStatusGetAsync(nodeId).ConfigureAwait(false)),
                 _ => throw new InvalidOperationException()
             };
 
@@ -49,13 +77,6 @@ namespace Etherna.BeehiveManager.NetClient
             CurrentApiVersion switch
             {
                 ApiVersions.v0_3_0 => new PostageBatchDto(await client.ApiV0_3NodesBatchesGetAsync(ownerNodeId, batchId).ConfigureAwait(false)),
-                _ => throw new InvalidOperationException()
-            };
-
-        public async Task<IEnumerable<PostageBatchDto>> GetPostageBatchesFromAllHealthyNodesAsync() =>
-            CurrentApiVersion switch
-            {
-                ApiVersions.v0_3_0 => (await client.ApiV0_3PostageBatchesGetAsync().ConfigureAwait(false)).Select(i => new PostageBatchDto(i)),
                 _ => throw new InvalidOperationException()
             };
 
