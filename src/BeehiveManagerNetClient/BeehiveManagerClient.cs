@@ -108,14 +108,15 @@ namespace Etherna.BeehiveManager.NetClient
                 _ => throw new InvalidOperationException()
             };
 
-        public async Task<BeeNodeDto> RegisterNewNodeAsync(int debugApiPort, int gatewayApiPort, Uri url) =>
+        public async Task<BeeNodeDto> RegisterNewNodeAsync(string connectionScheme, int debugApiPort, int gatewayApiPort, string hostname) =>
             CurrentApiVersion switch
             {
                 ApiVersions.v0_3_0 => new BeeNodeDto(await client.ApiV0_3NodesPostAsync(new Generated.BeeNodeInput
-                { 
+                {
+                    ConnectionScheme = connectionScheme,
                     DebugApiPort = debugApiPort,
                     GatewayApiPort = gatewayApiPort,
-                    Url = url?.ToString() ?? throw new ArgumentNullException(nameof(url))
+                    Hostname = hostname
                 }).ConfigureAwait(false)),
                 _ => throw new InvalidOperationException()
             };
