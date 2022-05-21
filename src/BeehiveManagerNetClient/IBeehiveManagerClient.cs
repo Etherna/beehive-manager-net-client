@@ -102,11 +102,12 @@ namespace Etherna.BeehiveManager.NetClient
         /// <summary>
         /// Register a new bee node.
         /// </summary>
+        /// <param name="connectionScheme">The connection scheme (ex: http)</param>
         /// <param name="debugApiPort">Debug api port</param>
         /// <param name="gatewayApiPort">Gateway api port</param>
-        /// <param name="url">Node url</param>
+        /// <param name="hostname">The hostname</param>
         /// <returns>Bee node info</returns>
-        Task<BeeNodeDto> RegisterNewNodeAsync(int debugApiPort, int gatewayApiPort, Uri url);
+        Task<BeeNodeDto> RegisterNewNodeAsync(string connectionScheme, int debugApiPort, int gatewayApiPort, string hostname);
 
         /// <summary>
         /// Remove a bee node.
