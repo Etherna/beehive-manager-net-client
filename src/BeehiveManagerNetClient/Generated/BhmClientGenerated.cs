@@ -1327,7 +1327,7 @@ namespace Etherna.BeehiveManager.NetClient.Generated
 
         [System.Text.Json.Serialization.JsonPropertyName("debugPort")]
 
-        [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull)]   
+        [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingDefault)]   
         public int DebugPort { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("ethereumAddress")]
@@ -1337,7 +1337,7 @@ namespace Etherna.BeehiveManager.NetClient.Generated
 
         [System.Text.Json.Serialization.JsonPropertyName("gatewayPort")]
 
-        [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull)]   
+        [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingDefault)]   
         public int GatewayPort { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("hostname")]
@@ -1373,13 +1373,13 @@ namespace Etherna.BeehiveManager.NetClient.Generated
 
         [System.Text.Json.Serialization.JsonPropertyName("debugApiPort")]
 
-        [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull)]   
+        [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingDefault)]   
         [System.ComponentModel.DataAnnotations.Range(1, 65535)]
         public int DebugApiPort { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("gatewayApiPort")]
 
-        [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull)]   
+        [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingDefault)]   
         [System.ComponentModel.DataAnnotations.Range(1, 65535)]
         public int GatewayApiPort { get; set; } = default!;
 
@@ -1407,7 +1407,7 @@ namespace Etherna.BeehiveManager.NetClient.Generated
 
         [System.Text.Json.Serialization.JsonPropertyName("isAlive")]
 
-        [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull)]   
+        [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingDefault)]   
         public bool IsAlive { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("postageBatchesId")]
@@ -1428,32 +1428,32 @@ namespace Etherna.BeehiveManager.NetClient.Generated
 
         [System.Text.Json.Serialization.JsonPropertyName("batchTTL")]
 
-        [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull)]   
+        [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingDefault)]   
         public int BatchTTL { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("blockNumber")]
 
-        [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull)]   
+        [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingDefault)]   
         public int BlockNumber { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("bucketDepth")]
 
-        [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull)]   
+        [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingDefault)]   
         public int BucketDepth { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("depth")]
 
-        [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull)]   
+        [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingDefault)]   
         public int Depth { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("exists")]
 
-        [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull)]   
+        [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingDefault)]   
         public bool Exists { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("immutableFlag")]
 
-        [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull)]   
+        [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingDefault)]   
         public bool ImmutableFlag { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("label")]
@@ -1463,7 +1463,7 @@ namespace Etherna.BeehiveManager.NetClient.Generated
 
         [System.Text.Json.Serialization.JsonPropertyName("normalisedBalance")]
 
-        [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull)]   
+        [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingDefault)]   
         public long NormalisedBalance { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("ownerAddress")]
@@ -1473,7 +1473,7 @@ namespace Etherna.BeehiveManager.NetClient.Generated
 
         [System.Text.Json.Serialization.JsonPropertyName("usable")]
 
-        [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull)]   
+        [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingDefault)]   
         public bool Usable { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("utilization")]
