@@ -80,6 +80,13 @@ namespace Etherna.BeehiveManager.NetClient
                 _ => throw new InvalidOperationException()
             };
 
+        public async Task<ChainStateDto> GetChainStateAsync() =>
+            CurrentApiVersion switch
+            {
+                ApiVersions.v0_3_0 => new ChainStateDto(await client.ApiV0_3ChainStateAsync().ConfigureAwait(false)),
+                _ => throw new InvalidOperationException()
+            };
+
         public async Task<BeeNodeStatusDto> GetNodeLiveStatusAsync(string nodeId) =>
             CurrentApiVersion switch
             {
