@@ -41,7 +41,7 @@ namespace Etherna.BeehiveManager.NetClient.DtoModels
         // Properties.
         public string Id { get; }
         public long? Value { get; }
-        public int BatchTTL { get; }
+        public long BatchTTL { get; }
         public int BlockNumber { get; }
         public int BucketDepth { get; }
         public int Depth { get; }

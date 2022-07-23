@@ -70,6 +70,12 @@ namespace Etherna.BeehiveManager.NetClient
         Task<IEnumerable<BeeNodeStatusDto>> GetAllBeeNodeLiveStatus();
 
         /// <summary>
+        /// Get chain state
+        /// </summary>
+        /// <returns>The chain state</returns>
+        Task<ChainStateDto> GetChainStateAsync();
+
+        /// <summary>
         /// Get live status of a Bee node
         /// </summary>
         /// <param name="id">Id of the bee node</param>
