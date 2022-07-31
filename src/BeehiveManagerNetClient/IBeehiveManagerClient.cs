@@ -43,6 +43,16 @@ namespace Etherna.BeehiveManager.NetClient
             string? nodeId = null);
 
         /// <summary>
+        /// Dilute a postage batch depth
+        /// </summary>
+        /// <param name="batchId">Id of the postage batch</param>
+        /// <param name="depth">New postage depth. Must be higher than the previous depth</param>
+        /// <returns>Postage batch Id</returns>
+        Task<string> DilutePostageBatchAsync(
+            string batchId,
+            int depth);
+
+        /// <summary>
         /// Get node info by its id
         /// </summary>
         /// <param name="nodeId">Id of the bee node</param>
@@ -121,5 +131,13 @@ namespace Etherna.BeehiveManager.NetClient
         /// <param name="id">Id of the bee node</param>
         /// <returns>Success</returns>
         Task RemoveNodeAsync(string id);
+
+        /// <summary>
+        /// Top up a postage batch
+        /// </summary>
+        /// <param name="batchId">Postage batch Id</param>
+        /// <param name="amount">Amount to top up</param>
+        /// <returns>Postage batch Id</returns>
+        Task<string> TopUpPostageBatchAsync(string batchId, long amount);
     }
 }
