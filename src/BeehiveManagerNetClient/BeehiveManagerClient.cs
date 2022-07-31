@@ -52,6 +52,13 @@ namespace Etherna.BeehiveManager.NetClient
                 _ => throw new InvalidOperationException()
             };
 
+        public async Task<string> DilutePostageBatchAsync(string batchId, int depth) =>
+            CurrentApiVersion switch
+            {
+                ApiVersions.v0_3_0 => await client.ApiV0_3PostageBatchesDiluteAsync(batchId, depth).ConfigureAwait(false),
+                _ => throw new InvalidOperationException()
+            };
+
         public async Task<BeeNodeDto> FindNodeAsync(string nodeId) =>
             CurrentApiVersion switch
             {
@@ -132,6 +139,13 @@ namespace Etherna.BeehiveManager.NetClient
             CurrentApiVersion switch
             {
                 ApiVersions.v0_3_0 => client.ApiV0_3NodesDeleteAsync(id),
+                _ => throw new InvalidOperationException()
+            };
+
+        public async Task<string> TopUpPostageBatchAsync(string batchId, long amount) =>
+            CurrentApiVersion switch
+            {
+                ApiVersions.v0_3_0 => await client.ApiV0_3PostageBatchesTopupAsync(batchId, amount).ConfigureAwait(false),
                 _ => throw new InvalidOperationException()
             };
     }
