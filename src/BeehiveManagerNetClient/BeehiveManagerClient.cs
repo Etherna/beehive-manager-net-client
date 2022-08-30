@@ -48,84 +48,119 @@ namespace Etherna.BeehiveManager.NetClient
             string? nodeId = null) =>
             CurrentApiVersion switch
             {
-                ApiVersions.v0_3_0 => new PostageBatchRefDto(await client.ApiV0_3PostageBatchesAsync(amount, depth, gasPrice, immutable, label, nodeId).ConfigureAwait(false)),
+                ApiVersions.v0_3 => new PostageBatchRefDto(await client.ApiV0_3PostageBatchesAsync(amount, depth, gasPrice, immutable, label, nodeId).ConfigureAwait(false)),
+                _ => throw new InvalidOperationException()
+            };
+
+        public Task DeletePinFromNodeAsync(string nodeId, string hash) =>
+            CurrentApiVersion switch
+            {
+                ApiVersions.v0_3 => client.ApiV0_3NodesPinsDeleteAsync(nodeId, hash),
                 _ => throw new InvalidOperationException()
             };
 
         public async Task<string> DilutePostageBatchAsync(string batchId, int depth) =>
             CurrentApiVersion switch
             {
-                ApiVersions.v0_3_0 => await client.ApiV0_3PostageBatchesDiluteAsync(batchId, depth).ConfigureAwait(false),
+                ApiVersions.v0_3 => await client.ApiV0_3PostageBatchesDiluteAsync(batchId, depth).ConfigureAwait(false),
                 _ => throw new InvalidOperationException()
             };
 
         public async Task<BeeNodeDto> FindNodeAsync(string nodeId) =>
             CurrentApiVersion switch
             {
-                ApiVersions.v0_3_0 => new BeeNodeDto(await client.ApiV0_3NodesGetAsync(nodeId).ConfigureAwait(false)),
+                ApiVersions.v0_3 => new BeeNodeDto(await client.ApiV0_3NodesGetAsync(nodeId).ConfigureAwait(false)),
                 _ => throw new InvalidOperationException()
             };
 
         public async Task<BeeNodeDto> FindNodeOwnerOfPostageBatchAsync(string batchId) =>
             CurrentApiVersion switch
             {
-                ApiVersions.v0_3_0 => new BeeNodeDto(await client.ApiV0_3PostageBatchesNodeAsync(batchId).ConfigureAwait(false)),
+                ApiVersions.v0_3 => new BeeNodeDto(await client.ApiV0_3PostageBatchesNodeAsync(batchId).ConfigureAwait(false)),
+                _ => throw new InvalidOperationException()
+            };
+
+        public async Task<IEnumerable<BeeNodeDto>> FindBeeNodesPinningContentAsync(string hash, bool requireAliveNodes = false) =>
+            CurrentApiVersion switch
+            {
+                ApiVersions.v0_3 => (await client.ApiV0_3PinningNodesAsync(hash, requireAliveNodes).ConfigureAwait(false)).Select(n => new BeeNodeDto(n)),
                 _ => throw new InvalidOperationException()
             };
 
         public async Task<bool> ForceNodeFullStatusRefreshAsync(string nodeId) =>
             CurrentApiVersion switch
             {
-                ApiVersions.v0_3_0 => await client.ApiV0_3NodesStatusPutAsync(nodeId).ConfigureAwait(false),
+                ApiVersions.v0_3 => await client.ApiV0_3NodesStatusPutAsync(nodeId).ConfigureAwait(false),
                 _ => throw new InvalidOperationException()
             };
 
         public async Task<IEnumerable<BeeNodeStatusDto>> GetAllBeeNodeLiveStatus() =>
             CurrentApiVersion switch
             {
-                ApiVersions.v0_3_0 => (await client.ApiV0_3NodesStatusGetAsync().ConfigureAwait(false)).Select(s => new BeeNodeStatusDto(s)),
+                ApiVersions.v0_3 => (await client.ApiV0_3NodesStatusGetAsync().ConfigureAwait(false)).Select(s => new BeeNodeStatusDto(s)),
                 _ => throw new InvalidOperationException()
             };
 
         public async Task<ChainStateDto> GetChainStateAsync() =>
             CurrentApiVersion switch
             {
-                ApiVersions.v0_3_0 => new ChainStateDto(await client.ApiV0_3ChainStateAsync().ConfigureAwait(false)),
+                ApiVersions.v0_3 => new ChainStateDto(await client.ApiV0_3ChainStateAsync().ConfigureAwait(false)),
                 _ => throw new InvalidOperationException()
             };
 
         public async Task<BeeNodeStatusDto> GetNodeLiveStatusAsync(string nodeId) =>
             CurrentApiVersion switch
             {
-                ApiVersions.v0_3_0 => new BeeNodeStatusDto(await client.ApiV0_3NodesStatusGetAsync(nodeId).ConfigureAwait(false)),
+                ApiVersions.v0_3 => new BeeNodeStatusDto(await client.ApiV0_3NodesStatusGetAsync(nodeId).ConfigureAwait(false)),
+                _ => throw new InvalidOperationException()
+            };
+
+        public async Task<IEnumerable<string>> GetPinsByNodeAsync(string nodeId) =>
+            CurrentApiVersion switch
+            {
+                ApiVersions.v0_3 => await client.ApiV0_3NodesPinsGetAsync(nodeId).ConfigureAwait(false),
+                _ => throw new InvalidOperationException()
+            };
+
+        public async Task<PinnedResourceDto> GetPinDetailsAsync(string nodeId, string hash) =>
+            CurrentApiVersion switch
+            {
+                ApiVersions.v0_3 => new PinnedResourceDto(await client.ApiV0_3NodesPinsGetAsync(nodeId, hash).ConfigureAwait(false)),
                 _ => throw new InvalidOperationException()
             };
 
         public async Task<PostageBatchDto> GetPostageBatchAsync(string ownerNodeId, string batchId) =>
             CurrentApiVersion switch
             {
-                ApiVersions.v0_3_0 => new PostageBatchDto(await client.ApiV0_3NodesBatchesGetAsync(ownerNodeId, batchId).ConfigureAwait(false)),
+                ApiVersions.v0_3 => new PostageBatchDto(await client.ApiV0_3NodesBatchesGetAsync(ownerNodeId, batchId).ConfigureAwait(false)),
                 _ => throw new InvalidOperationException()
             };
 
         public async Task<IEnumerable<PostageBatchDto>> GetPostageBatchesOwnedByNodeAsync(string nodeId) =>
             CurrentApiVersion switch
             {
-                ApiVersions.v0_3_0 => (await client.ApiV0_3NodesBatchesGetAsync(nodeId).ConfigureAwait(false)).Select(i => new PostageBatchDto(i)),
+                ApiVersions.v0_3 => (await client.ApiV0_3NodesBatchesGetAsync(nodeId).ConfigureAwait(false)).Select(i => new PostageBatchDto(i)),
                 _ => throw new InvalidOperationException()
             };
 
         public async Task<IEnumerable<BeeNodeDto>> GetRegisteredNodesAsync(int? page = null, int? take = null) =>
             CurrentApiVersion switch
             {
-                ApiVersions.v0_3_0 => (await client.ApiV0_3NodesGetAsync(page, take).ConfigureAwait(false)).Select(i => new BeeNodeDto(i)),
+                ApiVersions.v0_3 => (await client.ApiV0_3NodesGetAsync(page, take).ConfigureAwait(false)).Select(i => new BeeNodeDto(i)),
+                _ => throw new InvalidOperationException()
+            };
+
+        public Task<string> PinContentInNodeAsync(string hash, string? nodeId = null) =>
+            CurrentApiVersion switch
+            {
+                ApiVersions.v0_3 => client.ApiV0_3PinningAsync(hash, nodeId),
                 _ => throw new InvalidOperationException()
             };
 
         public async Task<BeeNodeDto> RegisterNewNodeAsync(string connectionScheme, int debugApiPort, int gatewayApiPort, string hostname) =>
             CurrentApiVersion switch
             {
-                ApiVersions.v0_3_0 => new BeeNodeDto(await client.ApiV0_3NodesPostAsync(new Generated.BeeNodeInput
+                ApiVersions.v0_3 => new BeeNodeDto(await client.ApiV0_3NodesPostAsync(new Generated.BeeNodeInput
                 {
                     ConnectionScheme = connectionScheme,
                     DebugApiPort = debugApiPort,
@@ -138,14 +173,14 @@ namespace Etherna.BeehiveManager.NetClient
         public Task RemoveNodeAsync(string id) =>
             CurrentApiVersion switch
             {
-                ApiVersions.v0_3_0 => client.ApiV0_3NodesDeleteAsync(id),
+                ApiVersions.v0_3 => client.ApiV0_3NodesDeleteAsync(id),
                 _ => throw new InvalidOperationException()
             };
 
         public async Task<string> TopUpPostageBatchAsync(string batchId, long amount) =>
             CurrentApiVersion switch
             {
-                ApiVersions.v0_3_0 => await client.ApiV0_3PostageBatchesTopupAsync(batchId, amount).ConfigureAwait(false),
+                ApiVersions.v0_3 => await client.ApiV0_3PostageBatchesTopupAsync(batchId, amount).ConfigureAwait(false),
                 _ => throw new InvalidOperationException()
             };
     }
