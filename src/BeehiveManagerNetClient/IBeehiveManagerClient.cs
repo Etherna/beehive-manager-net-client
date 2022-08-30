@@ -43,6 +43,13 @@ namespace Etherna.BeehiveManager.NetClient
             string? nodeId = null);
 
         /// <summary>
+        /// Delete a pinned resource from a node
+        /// </summary>
+        /// <param name="nodeId">Id of the bee node</param>
+        /// <param name="hash">Resource hash</param>
+        Task DeletePinFromNodeAsync(string nodeId, string hash);
+
+        /// <summary>
         /// Dilute a postage batch depth
         /// </summary>
         /// <param name="batchId">Id of the postage batch</param>
@@ -51,6 +58,14 @@ namespace Etherna.BeehiveManager.NetClient
         Task<string> DilutePostageBatchAsync(
             string batchId,
             int depth);
+
+        /// <summary>
+        /// Find bee node pinning a specific content
+        /// </summary>
+        /// <param name="hash">Reference hash of the content</param>
+        /// <param name="requireAliveNodes">True if nodes needs to be alive</param>
+        /// <response code="200">List of Bee nodes</response>
+        Task<IEnumerable<BeeNodeDto>> FindBeeNodesPinningContentAsync(string hash, bool requireAliveNodes = false);
 
         /// <summary>
         /// Get node info by its id
@@ -93,6 +108,21 @@ namespace Etherna.BeehiveManager.NetClient
         Task<BeeNodeStatusDto> GetNodeLiveStatusAsync(string nodeId);
 
         /// <summary>
+        /// Get details of a pinned resource on a node
+        /// </summary>
+        /// <param name="nodeId">Id of the bee node</param>
+        /// <param name="hash">Resource hash</param>
+        /// <returns>Pinned resource info</returns>
+        Task<PinnedResourceDto> GetPinDetailsAsync(string nodeId, string hash);
+
+        /// <summary>
+        /// Get all pinned resources by a node
+        /// </summary>
+        /// <param name="id">Id of the bee node</param>
+        /// <returns>List of pinned resources</returns>
+        Task<IEnumerable<string>> GetPinsByNodeAsync(string nodeId);
+
+        /// <summary>
         /// Find details of a postage batch owned by a node
         /// </summary>
         /// <param name="ownerNodeId">Id of the bee node</param>
@@ -114,6 +144,14 @@ namespace Etherna.BeehiveManager.NetClient
         /// <param name="take">Number of items to retrieve. Max 100</param>
         /// <returns>Current page on list</returns>
         Task<IEnumerable<BeeNodeDto>> GetRegisteredNodesAsync(int? page = null, int? take = null);
+
+        /// <summary>
+        /// Pin a content into a node that doesn't already pin it
+        /// </summary>
+        /// <param name="hash">The content hash reference</param>
+        /// <param name="nodeId">Bee node Id</param>
+        /// <response code="200">Id of the new pinning node</response>
+        Task<string> PinContentInNodeAsync(string hash, string? nodeId = null);
 
         /// <summary>
         /// Register a new bee node.
