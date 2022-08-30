@@ -17,9 +17,9 @@ namespace Etherna.BeehiveManager.NetClient.DtoModels
         }
 
         public long Block { get; }
-        public string CurrentPrice { get; }
+        public long CurrentPrice { get; }
         public string SourceNodeId { get; }
         public DateTimeOffset TimeStamp { get; }
-        public string TotalAmount { get; }
+        public long TotalAmount { get; }
     }
 }
