@@ -2242,7 +2242,7 @@ namespace Etherna.BeehiveManager.NetClient.Generated
 
         [System.Text.Json.Serialization.JsonPropertyName("currentPrice")]
 
-        [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull)]   
+        [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingDefault)]   
         public long CurrentPrice { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("sourceNodeId")]
