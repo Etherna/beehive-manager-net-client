@@ -150,6 +150,13 @@ namespace Etherna.BeehiveManager.NetClient
                 _ => throw new InvalidOperationException()
             };
 
+        public Task NotifyNodeOfUploadedPinnedContentAsync(string id, string hash) =>
+            CurrentApiVersion switch
+            {
+                ApiVersions.v0_3 => client.ApiV0_3NodesPinsUploadedAsync(id, hash),
+                _ => throw new InvalidOperationException()
+            };
+
         public Task<string> PinContentInNodeAsync(string hash, string? nodeId = null) =>
             CurrentApiVersion switch
             {
@@ -174,6 +181,14 @@ namespace Etherna.BeehiveManager.NetClient
             CurrentApiVersion switch
             {
                 ApiVersions.v0_3 => client.ApiV0_3NodesDeleteAsync(id),
+                _ => throw new InvalidOperationException()
+            };
+
+        public async Task<BeeNodeDto> SelectLoadBalancedNodeForDownloadAsync(string hash) =>
+            CurrentApiVersion switch
+
+            {
+                ApiVersions.v0_3 => new BeeNodeDto(await client.ApiV0_3LoadBalancerDownloadAsync(hash).ConfigureAwait(false)),
                 _ => throw new InvalidOperationException()
             };
 

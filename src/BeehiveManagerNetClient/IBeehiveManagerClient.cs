@@ -146,6 +146,13 @@ namespace Etherna.BeehiveManager.NetClient
         Task<IEnumerable<BeeNodeDto>> GetRegisteredNodesAsync(int? page = null, int? take = null);
 
         /// <summary>
+        /// Notify live manager of pinned content during upload
+        /// </summary>
+        /// <param name="id">Id of the bee node</param>
+        /// <param name="hash">Resource hash</param>
+        Task NotifyNodeOfUploadedPinnedContentAsync(string id, string hash);
+
+        /// <summary>
         /// Pin a content into a node that doesn't already pin it
         /// </summary>
         /// <param name="hash">The content hash reference</param>
@@ -169,6 +176,13 @@ namespace Etherna.BeehiveManager.NetClient
         /// <param name="id">Id of the bee node</param>
         /// <returns>Success</returns>
         Task RemoveNodeAsync(string id);
+
+        /// <summary>
+        /// Select best node for download a specific content
+        /// </summary>
+        /// <param name="hash">Reference hash of the content</param>
+        /// <returns>Selected Bee node</returns>
+        Task<BeeNodeDto> SelectLoadBalancedNodeForDownloadAsync(string hash);
 
         /// <summary>
         /// Top up a postage batch
