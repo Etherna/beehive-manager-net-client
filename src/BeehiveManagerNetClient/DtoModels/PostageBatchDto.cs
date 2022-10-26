@@ -39,7 +39,6 @@ namespace Etherna.BeehiveManager.NetClient.DtoModels
 
         // Properties.
         public string Id { get; }
-        public long? Value { get; }
         public long BatchTTL { get; }
         public int BlockNumber { get; }
         public int BucketDepth { get; }
@@ -50,5 +49,6 @@ namespace Etherna.BeehiveManager.NetClient.DtoModels
         public long NormalisedBalance { get; }
         public bool Usable { get; }
         public int? Utilization { get; }
+        public long? Value { get; }
     }
 }

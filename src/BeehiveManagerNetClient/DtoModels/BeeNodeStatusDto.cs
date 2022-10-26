@@ -25,16 +25,27 @@ namespace Etherna.BeehiveManager.NetClient.DtoModels
             if (beeNodeStatusDto is null)
                 throw new ArgumentNullException(nameof(beeNodeStatusDto));
 
-            Errors = beeNodeStatusDto.Errors;
-            IsAlive = beeNodeStatusDto.IsAlive;
-            PostageBatchesId = beeNodeStatusDto.PostageBatchesId;
             Id = beeNodeStatusDto.Id;
+            Errors = beeNodeStatusDto.Errors;
+            EthereumAddress = beeNodeStatusDto.EthereumAddress;
+            IsAlive = beeNodeStatusDto.IsAlive;
+            OverlayAddress = beeNodeStatusDto.OverlayAddress;
+            PinnedHashes = beeNodeStatusDto.PinnedHashes;
+            PostageBatchesId = beeNodeStatusDto.PostageBatchesId;
+            PssPublicKey = beeNodeStatusDto.PssPublicKey;
+            PublicKey = beeNodeStatusDto.PublicKey;
         }
 
         // Properties.
         public string Id { get; }
         public IEnumerable<string> Errors { get; }
+        public string? EthereumAddress { get; }
+        public DateTimeOffset HeartbeatTimeStamp { get; }
         public bool IsAlive { get; }
+        public string? OverlayAddress { get; }
+        public IEnumerable<string> PinnedHashes { get; }
         public IEnumerable<string> PostageBatchesId { get; }
+        public string? PssPublicKey { get; }
+        public string? PublicKey { get; }
     }
 }

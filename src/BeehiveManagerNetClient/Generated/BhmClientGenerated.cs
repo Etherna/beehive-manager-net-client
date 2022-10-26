@@ -49,12 +49,40 @@ namespace Etherna.BeehiveManager.NetClient.Generated
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
+        /// Get ethereum address configuration
+        /// </summary>
+        /// <param name="address">The ethereum address</param>
+        /// <returns>Ethereum address configuration</returns>
+        /// <exception cref="BeehiveManagerClientException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<EtherAddressDto> ApiV0_3EtherAddressesAsync(string address, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Set preferred SOC node for address
+        /// </summary>
+        /// <param name="address">The ethereum address</param>
+        /// <param name="nodeId">The Bee node id</param>
+        /// <returns>Success</returns>
+        /// <exception cref="BeehiveManagerClientException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task ApiV0_3EtherAddressesSocnodeAsync(string address, string nodeId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
         /// Select best node for download a specific content
         /// </summary>
         /// <param name="hash">Reference hash of the content</param>
         /// <returns>Selected Bee node</returns>
         /// <exception cref="BeehiveManagerClientException">A server side error occurred.</exception>
         System.Threading.Tasks.Task<BeeNodeDto> ApiV0_3LoadBalancerDownloadAsync(string hash, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Select best node for download a specific content
+        /// </summary>
+        /// <param name="address">Reference hash of the content</param>
+        /// <returns>Selected Bee node</returns>
+        /// <exception cref="BeehiveManagerClientException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<BeeNodeDto> ApiV0_3LoadBalancerSocAsync(string address, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -216,9 +244,10 @@ namespace Etherna.BeehiveManager.NetClient.Generated
         /// <param name="immutable">Is batch immutable</param>
         /// <param name="label">An optional label for this batch</param>
         /// <param name="nodeId">Bee node Id</param>
+        /// <param name="ownerAddress">The optional ethereum address of the owner</param>
         /// <returns>Postage batch id</returns>
         /// <exception cref="BeehiveManagerClientException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<PostageBatchRefDto> ApiV0_3PostageBatchesAsync(long? amount = null, int? depth = null, long? gasPrice = null, bool? immutable = null, string? label = null, string? nodeId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<PostageBatchRefDto> ApiV0_3PostageBatchesAsync(long? amount = null, int? depth = null, long? gasPrice = null, bool? immutable = null, string? label = null, string? nodeId = null, string? ownerAddress = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
@@ -337,6 +366,195 @@ namespace Etherna.BeehiveManager.NetClient.Generated
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
+        /// Get ethereum address configuration
+        /// </summary>
+        /// <param name="address">The ethereum address</param>
+        /// <returns>Ethereum address configuration</returns>
+        /// <exception cref="BeehiveManagerClientException">A server side error occurred.</exception>
+        public virtual async System.Threading.Tasks.Task<EtherAddressDto> ApiV0_3EtherAddressesAsync(string address, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        {
+            if (address == null)
+                throw new System.ArgumentNullException("address");
+
+            var urlBuilder_ = new System.Text.StringBuilder();
+            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/v0.3/EtherAddresses/{address}");
+            urlBuilder_.Replace("{address}", System.Uri.EscapeDataString(ConvertToString(address, System.Globalization.CultureInfo.InvariantCulture)));
+
+            var client_ = new System.Net.Http.HttpClient();
+            var disposeClient_ = true;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+                    request_.Method = new System.Net.Http.HttpMethod("GET");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("text/plain"));
+
+                    PrepareRequest(client_, request_, urlBuilder_);
+
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+
+                    PrepareRequest(client_, request_, url_);
+
+                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var disposeResponse_ = true;
+                    try
+                    {
+                        var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
+                        if (response_.Content != null && response_.Content.Headers != null)
+                        {
+                            foreach (var item_ in response_.Content.Headers)
+                                headers_[item_.Key] = item_.Value;
+                        }
+
+                        ProcessResponse(client_, response_);
+
+                        var status_ = (int)response_.StatusCode;
+                        if (status_ == 200)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<EtherAddressDto>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new BeehiveManagerClientException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
+                        }
+                        else
+                        if (status_ == 400)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<ProblemDetails>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new BeehiveManagerClientException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            throw new BeehiveManagerClientException<ProblemDetails>("Bad Request", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                        }
+                        else
+                        if (status_ == 404)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<ProblemDetails>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new BeehiveManagerClientException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            throw new BeehiveManagerClientException<ProblemDetails>("Not Found", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                        }
+                        else
+                        {
+                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                            throw new BeehiveManagerClientException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                        }
+                    }
+                    finally
+                    {
+                        if (disposeResponse_)
+                            response_.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (disposeClient_)
+                    client_.Dispose();
+            }
+        }
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Set preferred SOC node for address
+        /// </summary>
+        /// <param name="address">The ethereum address</param>
+        /// <param name="nodeId">The Bee node id</param>
+        /// <returns>Success</returns>
+        /// <exception cref="BeehiveManagerClientException">A server side error occurred.</exception>
+        public virtual async System.Threading.Tasks.Task ApiV0_3EtherAddressesSocnodeAsync(string address, string nodeId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        {
+            if (address == null)
+                throw new System.ArgumentNullException("address");
+
+            if (nodeId == null)
+                throw new System.ArgumentNullException("nodeId");
+
+            var urlBuilder_ = new System.Text.StringBuilder();
+            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/v0.3/EtherAddresses/{address}/socnode/{nodeId}");
+            urlBuilder_.Replace("{address}", System.Uri.EscapeDataString(ConvertToString(address, System.Globalization.CultureInfo.InvariantCulture)));
+            urlBuilder_.Replace("{nodeId}", System.Uri.EscapeDataString(ConvertToString(nodeId, System.Globalization.CultureInfo.InvariantCulture)));
+
+            var client_ = new System.Net.Http.HttpClient();
+            var disposeClient_ = true;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+                    request_.Method = new System.Net.Http.HttpMethod("GET");
+
+                    PrepareRequest(client_, request_, urlBuilder_);
+
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+
+                    PrepareRequest(client_, request_, url_);
+
+                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var disposeResponse_ = true;
+                    try
+                    {
+                        var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
+                        if (response_.Content != null && response_.Content.Headers != null)
+                        {
+                            foreach (var item_ in response_.Content.Headers)
+                                headers_[item_.Key] = item_.Value;
+                        }
+
+                        ProcessResponse(client_, response_);
+
+                        var status_ = (int)response_.StatusCode;
+                        if (status_ == 200)
+                        {
+                            return;
+                        }
+                        else
+                        if (status_ == 400)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<ProblemDetails>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new BeehiveManagerClientException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            throw new BeehiveManagerClientException<ProblemDetails>("Bad Request", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                        }
+                        else
+                        if (status_ == 404)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<ProblemDetails>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new BeehiveManagerClientException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            throw new BeehiveManagerClientException<ProblemDetails>("Not Found", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                        }
+                        else
+                        {
+                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                            throw new BeehiveManagerClientException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                        }
+                    }
+                    finally
+                    {
+                        if (disposeResponse_)
+                            response_.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (disposeClient_)
+                    client_.Dispose();
+            }
+        }
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
         /// Select best node for download a specific content
         /// </summary>
         /// <param name="hash">Reference hash of the content</param>
@@ -350,6 +568,91 @@ namespace Etherna.BeehiveManager.NetClient.Generated
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/v0.3/LoadBalancer/download/{hash}");
             urlBuilder_.Replace("{hash}", System.Uri.EscapeDataString(ConvertToString(hash, System.Globalization.CultureInfo.InvariantCulture)));
+
+            var client_ = new System.Net.Http.HttpClient();
+            var disposeClient_ = true;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+                    request_.Method = new System.Net.Http.HttpMethod("GET");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("text/plain"));
+
+                    PrepareRequest(client_, request_, urlBuilder_);
+
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+
+                    PrepareRequest(client_, request_, url_);
+
+                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var disposeResponse_ = true;
+                    try
+                    {
+                        var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
+                        if (response_.Content != null && response_.Content.Headers != null)
+                        {
+                            foreach (var item_ in response_.Content.Headers)
+                                headers_[item_.Key] = item_.Value;
+                        }
+
+                        ProcessResponse(client_, response_);
+
+                        var status_ = (int)response_.StatusCode;
+                        if (status_ == 200)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<BeeNodeDto>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new BeehiveManagerClientException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
+                        }
+                        else
+                        if (status_ == 400)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<ProblemDetails>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new BeehiveManagerClientException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            throw new BeehiveManagerClientException<ProblemDetails>("Bad Request", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                        }
+                        else
+                        {
+                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                            throw new BeehiveManagerClientException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                        }
+                    }
+                    finally
+                    {
+                        if (disposeResponse_)
+                            response_.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (disposeClient_)
+                    client_.Dispose();
+            }
+        }
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Select best node for download a specific content
+        /// </summary>
+        /// <param name="address">Reference hash of the content</param>
+        /// <returns>Selected Bee node</returns>
+        /// <exception cref="BeehiveManagerClientException">A server side error occurred.</exception>
+        public virtual async System.Threading.Tasks.Task<BeeNodeDto> ApiV0_3LoadBalancerSocAsync(string address, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        {
+            if (address == null)
+                throw new System.ArgumentNullException("address");
+
+            var urlBuilder_ = new System.Text.StringBuilder();
+            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/v0.3/LoadBalancer/soc/{address}");
+            urlBuilder_.Replace("{address}", System.Uri.EscapeDataString(ConvertToString(address, System.Globalization.CultureInfo.InvariantCulture)));
 
             var client_ = new System.Net.Http.HttpClient();
             var disposeClient_ = true;
@@ -1911,9 +2214,10 @@ namespace Etherna.BeehiveManager.NetClient.Generated
         /// <param name="immutable">Is batch immutable</param>
         /// <param name="label">An optional label for this batch</param>
         /// <param name="nodeId">Bee node Id</param>
+        /// <param name="ownerAddress">The optional ethereum address of the owner</param>
         /// <returns>Postage batch id</returns>
         /// <exception cref="BeehiveManagerClientException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<PostageBatchRefDto> ApiV0_3PostageBatchesAsync(long? amount = null, int? depth = null, long? gasPrice = null, bool? immutable = null, string? label = null, string? nodeId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public virtual async System.Threading.Tasks.Task<PostageBatchRefDto> ApiV0_3PostageBatchesAsync(long? amount = null, int? depth = null, long? gasPrice = null, bool? immutable = null, string? label = null, string? nodeId = null, string? ownerAddress = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/v0.3/Postage/batches?");
@@ -1940,6 +2244,10 @@ namespace Etherna.BeehiveManager.NetClient.Generated
             if (nodeId != null)
             {
                 urlBuilder_.Append(System.Uri.EscapeDataString("nodeId") + "=").Append(System.Uri.EscapeDataString(ConvertToString(nodeId, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
+            }
+            if (ownerAddress != null)
+            {
+                urlBuilder_.Append(System.Uri.EscapeDataString("ownerAddress") + "=").Append(System.Uri.EscapeDataString(ConvertToString(ownerAddress, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
             }
             urlBuilder_.Length--;
 
@@ -2334,11 +2642,6 @@ namespace Etherna.BeehiveManager.NetClient.Generated
         [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingDefault)]   
         public int DebugPort { get; set; } = default!;
 
-        [System.Text.Json.Serialization.JsonPropertyName("ethereumAddress")]
-
-        [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingDefault)]   
-        public string? EthereumAddress { get; set; } = default!;
-
         [System.Text.Json.Serialization.JsonPropertyName("gatewayPort")]
 
         [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingDefault)]   
@@ -2348,21 +2651,6 @@ namespace Etherna.BeehiveManager.NetClient.Generated
 
         [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingDefault)]   
         public string Hostname { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("overlayAddress")]
-
-        [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingDefault)]   
-        public string? OverlayAddress { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("pssPublicKey")]
-
-        [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingDefault)]   
-        public string? PssPublicKey { get; set; } = default!;
-
-        [System.Text.Json.Serialization.JsonPropertyName("publicKey")]
-
-        [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingDefault)]   
-        public string? PublicKey { get; set; } = default!;
 
     }
 
@@ -2409,6 +2697,11 @@ namespace Etherna.BeehiveManager.NetClient.Generated
         [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingDefault)]   
         public System.Collections.Generic.ICollection<string> Errors { get; } = default!;
 
+        [System.Text.Json.Serialization.JsonPropertyName("ethereumAddress")]
+
+        [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingDefault)]   
+        public string? EthereumAddress { get; set; } = default!;
+
         [System.Text.Json.Serialization.JsonPropertyName("heartbeatTimeStamp")]
 
         [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingDefault)]   
@@ -2419,6 +2712,11 @@ namespace Etherna.BeehiveManager.NetClient.Generated
         [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingDefault)]   
         public bool IsAlive { get; set; } = default!;
 
+        [System.Text.Json.Serialization.JsonPropertyName("overlayAddress")]
+
+        [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingDefault)]   
+        public string? OverlayAddress { get; set; } = default!;
+
         [System.Text.Json.Serialization.JsonPropertyName("pinnedHashes")]
 
         [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingDefault)]   
@@ -2428,6 +2726,16 @@ namespace Etherna.BeehiveManager.NetClient.Generated
 
         [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingDefault)]   
         public System.Collections.Generic.ICollection<string> PostageBatchesId { get; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("pssPublicKey")]
+
+        [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingDefault)]   
+        public string? PssPublicKey { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("publicKey")]
+
+        [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingDefault)]   
+        public string? PublicKey { get; set; } = default!;
 
     }
 
@@ -2459,6 +2767,22 @@ namespace Etherna.BeehiveManager.NetClient.Generated
 
         [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingDefault)]   
         public long TotalAmount { get; set; } = default!;
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "13.17.0.0 (NJsonSchema v10.8.0.0 (Newtonsoft.Json v13.0.0.0))")]
+    internal partial class EtherAddressDto
+    {
+
+        [System.Text.Json.Serialization.JsonPropertyName("address")]
+
+        [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingDefault)]   
+        public string Address { get; set; } = default!;
+
+        [System.Text.Json.Serialization.JsonPropertyName("preferredSocNode")]
+
+        [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingDefault)]   
+        public BeeNodeDto PreferredSocNode { get; set; } = default!;
 
     }
 
