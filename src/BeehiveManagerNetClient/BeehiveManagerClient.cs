@@ -45,10 +45,11 @@ namespace Etherna.BeehiveManager.NetClient
             long? gasPrice = null,
             bool immutable = false,
             string? label = null,
-            string? nodeId = null) =>
+            string? nodeId = null,
+            string? ownerAddress = null) =>
             CurrentApiVersion switch
             {
-                ApiVersions.v0_3 => new PostageBatchRefDto(await client.ApiV0_3PostageBatchesAsync(amount, depth, gasPrice, immutable, label, nodeId).ConfigureAwait(false)),
+                ApiVersions.v0_3 => new PostageBatchRefDto(await client.ApiV0_3PostageBatchesAsync(amount, depth, gasPrice, immutable, label, nodeId, ownerAddress).ConfigureAwait(false)),
                 _ => throw new InvalidOperationException()
             };
 
@@ -105,6 +106,13 @@ namespace Etherna.BeehiveManager.NetClient
             CurrentApiVersion switch
             {
                 ApiVersions.v0_3 => new ChainStateDto(await client.ApiV0_3ChainStateAsync().ConfigureAwait(false)),
+                _ => throw new InvalidOperationException()
+            };
+
+        public async Task<EtherAddressConfigDto> GetEtherAddressConfigAsync(string address) =>
+            CurrentApiVersion switch
+            {
+                ApiVersions.v0_3 => new EtherAddressConfigDto(await client.ApiV0_3EtherAddressesAsync(address).ConfigureAwait(false)),
                 _ => throw new InvalidOperationException()
             };
 
@@ -186,9 +194,22 @@ namespace Etherna.BeehiveManager.NetClient
 
         public async Task<BeeNodeDto> SelectLoadBalancedNodeForDownloadAsync(string hash) =>
             CurrentApiVersion switch
-
             {
                 ApiVersions.v0_3 => new BeeNodeDto(await client.ApiV0_3LoadBalancerDownloadAsync(hash).ConfigureAwait(false)),
+                _ => throw new InvalidOperationException()
+            };
+
+        public async Task<BeeNodeDto> SelectLoadBalancedNodeForSocAsync(string ownerAddress) =>
+            CurrentApiVersion switch
+            {
+                ApiVersions.v0_3 => new BeeNodeDto(await client.ApiV0_3LoadBalancerSocAsync(ownerAddress).ConfigureAwait(false)),
+                _ => throw new InvalidOperationException()
+            };
+
+        public Task SetEtherAddressPreferredSocNode(string address, string nodeId) =>
+            CurrentApiVersion switch
+            {
+                ApiVersions.v0_3 => client.ApiV0_3EtherAddressesSocnodeAsync(address, nodeId),
                 _ => throw new InvalidOperationException()
             };
 

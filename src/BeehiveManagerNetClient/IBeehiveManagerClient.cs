@@ -33,6 +33,7 @@ namespace Etherna.BeehiveManager.NetClient
         /// <param name="immutable">Is batch immutable</param>
         /// <param name="label">An optional label for this batch</param>
         /// <param name="nodeId">Bee node Id</param>
+        /// <param name="ownerAddress">The postage owner address</param>
         /// <returns>New postage batch reference</returns>
         Task<PostageBatchRefDto> BuyNewPostageBatchAsync(
             long amount,
@@ -40,7 +41,8 @@ namespace Etherna.BeehiveManager.NetClient
             long? gasPrice = null,
             bool immutable = false,
             string? label = null,
-            string? nodeId = null);
+            string? nodeId = null,
+            string? ownerAddress = null);
 
         /// <summary>
         /// Delete a pinned resource from a node
@@ -99,6 +101,13 @@ namespace Etherna.BeehiveManager.NetClient
         /// </summary>
         /// <returns>The chain state</returns>
         Task<ChainStateDto> GetChainStateAsync();
+
+        /// <summary>
+        /// Get ethereum address configuration
+        /// </summary>
+        /// <param name="address">The ethereum address</param>
+        /// <returns>Ethereum address configuration</returns>
+        Task<EtherAddressConfigDto> GetEtherAddressConfigAsync(string address);
 
         /// <summary>
         /// Get live status of a Bee node
@@ -183,6 +192,20 @@ namespace Etherna.BeehiveManager.NetClient
         /// <param name="hash">Reference hash of the content</param>
         /// <returns>Selected Bee node</returns>
         Task<BeeNodeDto> SelectLoadBalancedNodeForDownloadAsync(string hash);
+
+        /// <summary>
+        /// Select best node for interact with a SOC
+        /// </summary>
+        /// <param name="ownerAddress">The SOC owning address</param>
+        /// <returns>Selected Bee node</returns>
+        Task<BeeNodeDto> SelectLoadBalancedNodeForSocAsync(string ownerAddress);
+
+        /// <summary>
+        /// Set preferred SOC node for address
+        /// </summary>
+        /// <param name="address">The ethereum address</param>
+        /// <param name="nodeId">The Bee node id</param>
+        Task SetEtherAddressPreferredSocNode(string address, string nodeId);
 
         /// <summary>
         /// Top up a postage batch

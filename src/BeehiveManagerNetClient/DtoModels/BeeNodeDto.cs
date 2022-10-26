@@ -27,23 +27,15 @@ namespace Etherna.BeehiveManager.NetClient.DtoModels
             Id = beeNode.Id!;
             ConnectionScheme = beeNode.ConnectionScheme;
             DebugPort = beeNode.DebugPort;
-            EthereumAddress = beeNode.EthereumAddress;
             GatewayPort = beeNode.GatewayPort;
             Hostname = beeNode.Hostname;
-            OverlayAddress = beeNode.OverlayAddress;
-            PssPublicKey = beeNode.PssPublicKey;
-            PublicKey = beeNode.PublicKey;
         }
 
         // Properties.
         public string Id { get; }
         public string ConnectionScheme { get; }
         public int DebugPort { get; }
-        public string? EthereumAddress { get; }
         public int GatewayPort { get; }
         public string Hostname { get; }
-        public string? OverlayAddress { get; }
-        public string? PssPublicKey { get; }
-        public string? PublicKey { get; }
     }
 }
