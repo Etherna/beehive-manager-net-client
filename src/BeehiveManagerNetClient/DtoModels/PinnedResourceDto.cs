@@ -17,9 +17,9 @@ namespace Etherna.BeehiveManager.NetClient.DtoModels
             NodeId = resource.NodeId;
             Status = resource.Status switch
             {
-                Generated.PinnedResourceStatusDto.InProgress => PinnedResourceStatusDto.InProgress,
-                Generated.PinnedResourceStatusDto.NotPinned => PinnedResourceStatusDto.NotPinned,
-                Generated.PinnedResourceStatusDto.Pinned => PinnedResourceStatusDto.Pinned,
+                Generated.PinnedResourceDtoStatus.InProgress => PinnedResourceStatusDto.InProgress,
+                Generated.PinnedResourceDtoStatus.NotPinned => PinnedResourceStatusDto.NotPinned,
+                Generated.PinnedResourceDtoStatus.Pinned => PinnedResourceStatusDto.Pinned,
                 _ => throw new InvalidOperationException()
             };
         }

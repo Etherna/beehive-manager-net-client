@@ -13,6 +13,7 @@
 //   limitations under the License.
 
 using Etherna.BeehiveManager.NetClient.DtoModels;
+using Etherna.BeehiveManager.NetClient.InputModels;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -33,7 +34,6 @@ namespace Etherna.BeehiveManager.NetClient
         /// <param name="immutable">Is batch immutable</param>
         /// <param name="label">An optional label for this batch</param>
         /// <param name="nodeId">Bee node Id</param>
-        /// <param name="ownerAddress">The postage owner address</param>
         /// <returns>New postage batch reference</returns>
         Task<PostageBatchRefDto> BuyNewPostageBatchAsync(
             long amount,
@@ -41,8 +41,7 @@ namespace Etherna.BeehiveManager.NetClient
             long? gasPrice = null,
             bool immutable = false,
             string? label = null,
-            string? nodeId = null,
-            string? ownerAddress = null);
+            string? nodeId = null);
 
         /// <summary>
         /// Delete a pinned resource from a node
@@ -62,12 +61,12 @@ namespace Etherna.BeehiveManager.NetClient
             int depth);
 
         /// <summary>
-        /// Find bee node pinning a specific content
+        /// Find bee node pinning a specific resource
         /// </summary>
-        /// <param name="hash">Reference hash of the content</param>
+        /// <param name="hash">Reference hash of the resource</param>
         /// <param name="requireAliveNodes">True if nodes needs to be alive</param>
         /// <response code="200">List of Bee nodes</response>
-        Task<IEnumerable<BeeNodeDto>> FindBeeNodesPinningContentAsync(string hash, bool requireAliveNodes = false);
+        Task<IEnumerable<BeeNodeDto>> FindNodesPinningResourceAsync(string hash, bool requireAliveNodes = false);
 
         /// <summary>
         /// Get node info by its id
@@ -101,13 +100,6 @@ namespace Etherna.BeehiveManager.NetClient
         /// </summary>
         /// <returns>The chain state</returns>
         Task<ChainStateDto> GetChainStateAsync();
-
-        /// <summary>
-        /// Get ethereum address configuration
-        /// </summary>
-        /// <param name="address">The ethereum address</param>
-        /// <returns>Ethereum address configuration</returns>
-        Task<EtherAddressConfigDto> GetEtherAddressConfigAsync(string address);
 
         /// <summary>
         /// Get live status of a Bee node
@@ -155,19 +147,19 @@ namespace Etherna.BeehiveManager.NetClient
         Task<IEnumerable<BeeNodeDto>> GetRegisteredNodesAsync(int? page = null, int? take = null);
 
         /// <summary>
-        /// Notify live manager of pinned content during upload
+        /// Notify live manager of pinned resource during upload
         /// </summary>
         /// <param name="id">Id of the bee node</param>
         /// <param name="hash">Resource hash</param>
-        Task NotifyNodeOfUploadedPinnedContentAsync(string id, string hash);
+        Task NotifyNodeOfUploadedPinnedResourceAsync(string id, string hash);
 
         /// <summary>
-        /// Pin a content into a node that doesn't already pin it
+        /// Pin a resource into a node that doesn't already pin it
         /// </summary>
-        /// <param name="hash">The content hash reference</param>
+        /// <param name="hash">The resource hash reference</param>
         /// <param name="nodeId">Bee node Id</param>
         /// <response code="200">Id of the new pinning node</response>
-        Task<string> PinContentInNodeAsync(string hash, string? nodeId = null);
+        Task<string> PinResourceInNodeAsync(string hash, string? nodeId = null);
 
         /// <summary>
         /// Register a new bee node.
@@ -176,8 +168,14 @@ namespace Etherna.BeehiveManager.NetClient
         /// <param name="debugApiPort">Debug api port</param>
         /// <param name="gatewayApiPort">Gateway api port</param>
         /// <param name="hostname">The hostname</param>
+        /// <param name="nodeConfig">Node configuration</param>
         /// <returns>Bee node info</returns>
-        Task<BeeNodeDto> RegisterNewNodeAsync(string connectionScheme, int debugApiPort, int gatewayApiPort, string hostname);
+        Task<BeeNodeDto> RegisterNewNodeAsync(
+            string connectionScheme,
+            int debugApiPort,
+            int gatewayApiPort,
+            string hostname,
+            NodeConfigInput nodeConfig);
 
         /// <summary>
         /// Remove a bee node.
@@ -187,25 +185,24 @@ namespace Etherna.BeehiveManager.NetClient
         Task RemoveNodeAsync(string id);
 
         /// <summary>
-        /// Select best node for download a specific content
+        /// Reupload a resource to network from a specific node
         /// </summary>
-        /// <param name="hash">Reference hash of the content</param>
+        /// <param name="nodeId">Bee node Id</param>
+        /// <param name="hash">The resource hash reference</param>
+        Task ReuploadResourceToNetwork(string nodeId, string hash);
+
+        /// <summary>
+        /// Select an healthy bee node
+        /// </summary>
+        /// <returns>Selected Bee node</returns>
+        Task<BeeNodeDto> SelectHealthyNodeAsync();
+
+        /// <summary>
+        /// Select best node for download a specific resource
+        /// </summary>
+        /// <param name="hash">The resource hash reference</param>
         /// <returns>Selected Bee node</returns>
         Task<BeeNodeDto> SelectLoadBalancedNodeForDownloadAsync(string hash);
-
-        /// <summary>
-        /// Select best node for interact with a SOC
-        /// </summary>
-        /// <param name="ownerAddress">The SOC owning address</param>
-        /// <returns>Selected Bee node</returns>
-        Task<BeeNodeDto> SelectLoadBalancedNodeForSocAsync(string ownerAddress);
-
-        /// <summary>
-        /// Set preferred SOC node for address
-        /// </summary>
-        /// <param name="address">The ethereum address</param>
-        /// <param name="nodeId">The Bee node id</param>
-        Task SetEtherAddressPreferredSocNode(string address, string nodeId);
 
         /// <summary>
         /// Top up a postage batch
@@ -214,5 +211,20 @@ namespace Etherna.BeehiveManager.NetClient
         /// <param name="amount">Amount to top up</param>
         /// <returns>Postage batch Id</returns>
         Task<string> TopUpPostageBatchAsync(string batchId, long amount);
+
+        /// <summary>
+        /// Update configuration of a Bee node
+        /// </summary>
+        /// <param name="nodeId">Bee node Id</param>
+        /// <param name="nodeConfig">The new configuration</param>
+        Task UpdateNodeConfigAsync(string nodeId, NodeConfigInput nodeConfig);
+
+        /// <summary>
+        /// Verify if a resource is available form a specific node
+        /// </summary>
+        /// <param name="nodeId">Bee node Id</param>
+        /// <param name="hash">The resource hash reference</param>
+        /// <returns>True if resource is available from node</returns>
+        Task<bool> VerifyResourceAvailabilityFromNode(string nodeId, string hash);
     }
 }
