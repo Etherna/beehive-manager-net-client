@@ -18,7 +18,6 @@ using System.Globalization;
 
 namespace Etherna.BeehiveManager.NetClient.Exceptions
 {
-#pragma warning disable CA1032 // Implement standard exception constructors
     public partial class BeehiveManagerClientException : Exception
     {
         // Constructor.
@@ -65,5 +64,4 @@ namespace Etherna.BeehiveManager.NetClient.Exceptions
         // Properties.
         public TResult Result { get; private set; }
     }
-#pragma warning restore CA1032 // Implement standard exception constructors
 }
