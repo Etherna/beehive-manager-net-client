@@ -1,8 +1,8 @@
-﻿# Beehive Manager
+﻿# Beehive Manager Client
 
 ## Overview
 
-Bee.Net is a .Net client for the [Beehive Manager](https://github.com/Etherna/beehive-manager) service.
+Beehive Manager Client is a .Net client for the [Beehive Manager](https://github.com/Etherna/beehive-manager) service.
 
 Package repositories
 --------------------
