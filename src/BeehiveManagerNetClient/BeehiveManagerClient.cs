@@ -13,6 +13,7 @@
 //   limitations under the License.
 
 using Etherna.BeehiveManager.NetClient.DtoModels;
+using Etherna.BeehiveManager.NetClient.InputModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -45,11 +46,10 @@ namespace Etherna.BeehiveManager.NetClient
             long? gasPrice = null,
             bool immutable = false,
             string? label = null,
-            string? nodeId = null,
-            string? ownerAddress = null) =>
+            string? nodeId = null) =>
             CurrentApiVersion switch
             {
-                ApiVersions.v0_3 => new PostageBatchRefDto(await client.ApiV0_3PostageBatchesAsync(amount, depth, gasPrice, immutable, label, nodeId, ownerAddress).ConfigureAwait(false)),
+                ApiVersions.v0_3 => new PostageBatchRefDto(await client.ApiV0_3PostageBatchesAsync(amount, depth, gasPrice, immutable, label, nodeId).ConfigureAwait(false)),
                 _ => throw new InvalidOperationException()
             };
 
@@ -77,11 +77,11 @@ namespace Etherna.BeehiveManager.NetClient
         public async Task<BeeNodeDto> FindNodeOwnerOfPostageBatchAsync(string batchId) =>
             CurrentApiVersion switch
             {
-                ApiVersions.v0_3 => new BeeNodeDto(await client.ApiV0_3PostageBatchesNodeAsync(batchId).ConfigureAwait(false)),
+                ApiVersions.v0_3 => new BeeNodeDto(await client.ApiV0_3LoadBalancerBatchAsync(batchId).ConfigureAwait(false)),
                 _ => throw new InvalidOperationException()
             };
 
-        public async Task<IEnumerable<BeeNodeDto>> FindBeeNodesPinningContentAsync(string hash, bool requireAliveNodes = false) =>
+        public async Task<IEnumerable<BeeNodeDto>> FindNodesPinningResourceAsync(string hash, bool requireAliveNodes = false) =>
             CurrentApiVersion switch
             {
                 ApiVersions.v0_3 => (await client.ApiV0_3PinningNodesAsync(hash, requireAliveNodes).ConfigureAwait(false)).Select(n => new BeeNodeDto(n)),
@@ -109,13 +109,6 @@ namespace Etherna.BeehiveManager.NetClient
                 _ => throw new InvalidOperationException()
             };
 
-        public async Task<EtherAddressConfigDto> GetEtherAddressConfigAsync(string address) =>
-            CurrentApiVersion switch
-            {
-                ApiVersions.v0_3 => new EtherAddressConfigDto(await client.ApiV0_3EtherAddressesAsync(address).ConfigureAwait(false)),
-                _ => throw new InvalidOperationException()
-            };
-
         public async Task<BeeNodeStatusDto> GetNodeLiveStatusAsync(string nodeId) =>
             CurrentApiVersion switch
             {
@@ -123,17 +116,17 @@ namespace Etherna.BeehiveManager.NetClient
                 _ => throw new InvalidOperationException()
             };
 
-        public async Task<IEnumerable<string>> GetPinsByNodeAsync(string nodeId) =>
-            CurrentApiVersion switch
-            {
-                ApiVersions.v0_3 => await client.ApiV0_3NodesPinsGetAsync(nodeId).ConfigureAwait(false),
-                _ => throw new InvalidOperationException()
-            };
-
         public async Task<PinnedResourceDto> GetPinDetailsAsync(string nodeId, string hash) =>
             CurrentApiVersion switch
             {
                 ApiVersions.v0_3 => new PinnedResourceDto(await client.ApiV0_3NodesPinsGetAsync(nodeId, hash).ConfigureAwait(false)),
+                _ => throw new InvalidOperationException()
+            };
+
+        public async Task<IEnumerable<string>> GetPinsByNodeAsync(string nodeId) =>
+            CurrentApiVersion switch
+            {
+                ApiVersions.v0_3 => await client.ApiV0_3NodesPinsGetAsync(nodeId).ConfigureAwait(false),
                 _ => throw new InvalidOperationException()
             };
 
@@ -158,27 +151,28 @@ namespace Etherna.BeehiveManager.NetClient
                 _ => throw new InvalidOperationException()
             };
 
-        public Task NotifyNodeOfUploadedPinnedContentAsync(string id, string hash) =>
+        public Task NotifyNodeOfUploadedPinnedResourceAsync(string id, string hash) =>
             CurrentApiVersion switch
             {
                 ApiVersions.v0_3 => client.ApiV0_3NodesPinsUploadedAsync(id, hash),
                 _ => throw new InvalidOperationException()
             };
 
-        public Task<string> PinContentInNodeAsync(string hash, string? nodeId = null) =>
+        public Task<string> PinResourceInNodeAsync(string hash, string? nodeId = null) =>
             CurrentApiVersion switch
             {
                 ApiVersions.v0_3 => client.ApiV0_3PinningAsync(hash, nodeId),
                 _ => throw new InvalidOperationException()
             };
 
-        public async Task<BeeNodeDto> RegisterNewNodeAsync(string connectionScheme, int debugApiPort, int gatewayApiPort, string hostname) =>
+        public async Task<BeeNodeDto> RegisterNewNodeAsync(string connectionScheme, int debugApiPort, int gatewayApiPort, string hostname, NodeConfigInput nodeConfig) =>
             CurrentApiVersion switch
             {
                 ApiVersions.v0_3 => new BeeNodeDto(await client.ApiV0_3NodesPostAsync(new Generated.BeeNodeInput
                 {
                     ConnectionScheme = connectionScheme,
                     DebugApiPort = debugApiPort,
+                    EnableBatchCreation = nodeConfig.EnableBatchCreation,
                     GatewayApiPort = gatewayApiPort,
                     Hostname = hostname
                 }).ConfigureAwait(false)),
@@ -192,6 +186,20 @@ namespace Etherna.BeehiveManager.NetClient
                 _ => throw new InvalidOperationException()
             };
 
+        public Task ReuploadResourceToNetwork(string nodeId, string hash) =>
+            CurrentApiVersion switch
+            {
+                ApiVersions.v0_3 => client.ApiV0_3NodesStewardshipPutAsync(nodeId, hash),
+                _ => throw new InvalidOperationException()
+            };
+
+        public async Task<BeeNodeDto> SelectHealthyNodeAsync() =>
+            CurrentApiVersion switch
+            {
+                ApiVersions.v0_3 => new BeeNodeDto(await client.ApiV0_3LoadBalancerAsync().ConfigureAwait(false)),
+                _ => throw new InvalidOperationException()
+            };
+
         public async Task<BeeNodeDto> SelectLoadBalancedNodeForDownloadAsync(string hash) =>
             CurrentApiVersion switch
             {
@@ -199,24 +207,29 @@ namespace Etherna.BeehiveManager.NetClient
                 _ => throw new InvalidOperationException()
             };
 
-        public async Task<BeeNodeDto> SelectLoadBalancedNodeForSocAsync(string ownerAddress) =>
-            CurrentApiVersion switch
-            {
-                ApiVersions.v0_3 => new BeeNodeDto(await client.ApiV0_3LoadBalancerSocAsync(ownerAddress).ConfigureAwait(false)),
-                _ => throw new InvalidOperationException()
-            };
-
-        public Task SetEtherAddressPreferredSocNode(string address, string nodeId) =>
-            CurrentApiVersion switch
-            {
-                ApiVersions.v0_3 => client.ApiV0_3EtherAddressesSocnodeAsync(address, nodeId),
-                _ => throw new InvalidOperationException()
-            };
-
         public async Task<string> TopUpPostageBatchAsync(string batchId, long amount) =>
             CurrentApiVersion switch
             {
                 ApiVersions.v0_3 => await client.ApiV0_3PostageBatchesTopupAsync(batchId, amount).ConfigureAwait(false),
+                _ => throw new InvalidOperationException()
+            };
+
+        public Task UpdateNodeConfigAsync(string nodeId, NodeConfigInput nodeConfig) =>
+            CurrentApiVersion switch
+            {
+                ApiVersions.v0_3 => client.ApiV0_3NodesConfigAsync(
+                    nodeId,
+                    new Generated.UpdateNodeConfigInput
+                    {
+                        EnableBatchCreation = nodeConfig.EnableBatchCreation
+                    }),
+                _ => throw new InvalidOperationException()
+            };
+
+        public Task<bool> VerifyResourceAvailabilityFromNode(string nodeId, string hash) =>
+            CurrentApiVersion switch
+            {
+                ApiVersions.v0_3 => client.ApiV0_3NodesStewardshipGetAsync(nodeId, hash),
                 _ => throw new InvalidOperationException()
             };
     }
