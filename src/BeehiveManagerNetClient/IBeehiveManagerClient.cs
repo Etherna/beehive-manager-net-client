@@ -93,7 +93,7 @@ namespace Etherna.BeehiveManager.NetClient
         /// Get live status of all Bee node
         /// </summary>
         /// <returns>Live status of all nodes</returns>
-        Task<IEnumerable<BeeNodeStatusDto>> GetAllBeeNodeLiveStatus();
+        Task<IEnumerable<BeeNodeStatusDto>> GetAllBeeNodeLiveStatusAsync();
 
         /// <summary>
         /// Get chain state
@@ -225,6 +225,6 @@ namespace Etherna.BeehiveManager.NetClient
         /// <param name="nodeId">Bee node Id</param>
         /// <param name="hash">The resource hash reference</param>
         /// <returns>True if resource is available from node</returns>
-        Task<bool> VerifyResourceAvailabilityFromNode(string nodeId, string hash);
+        Task<bool> VerifyResourceAvailabilityFromNodeAsync(string nodeId, string hash);
     }
 }
