@@ -3205,7 +3205,7 @@ namespace Etherna.BeehiveManager.NetClient.Generated
         [System.Text.Json.Serialization.JsonPropertyName("errors")]
 
         [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingDefault)]   
-        public System.Collections.Generic.ICollection<string> Errors { get; } = default!;
+        public System.Collections.Generic.ICollection<string> Errors { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("ethereumAddress")]
 
@@ -3230,12 +3230,12 @@ namespace Etherna.BeehiveManager.NetClient.Generated
         [System.Text.Json.Serialization.JsonPropertyName("pinnedHashes")]
 
         [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingDefault)]   
-        public System.Collections.Generic.ICollection<string> PinnedHashes { get; } = default!;
+        public System.Collections.Generic.ICollection<string> PinnedHashes { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("postageBatchesId")]
 
         [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingDefault)]   
-        public System.Collections.Generic.ICollection<string> PostageBatchesId { get; } = default!;
+        public System.Collections.Generic.ICollection<string> PostageBatchesId { get; set; } = default!;
 
         [System.Text.Json.Serialization.JsonPropertyName("pssPublicKey")]
 
