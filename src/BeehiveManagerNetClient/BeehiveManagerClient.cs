@@ -95,7 +95,7 @@ namespace Etherna.BeehiveManager.NetClient
                 _ => throw new InvalidOperationException()
             };
 
-        public async Task<IEnumerable<BeeNodeStatusDto>> GetAllBeeNodeLiveStatus() =>
+        public async Task<IEnumerable<BeeNodeStatusDto>> GetAllBeeNodeLiveStatusAsync() =>
             CurrentApiVersion switch
             {
                 ApiVersions.v0_3 => (await client.ApiV0_3NodesStatusGetAsync().ConfigureAwait(false)).Select(s => new BeeNodeStatusDto(s)),
@@ -226,7 +226,7 @@ namespace Etherna.BeehiveManager.NetClient
                 _ => throw new InvalidOperationException()
             };
 
-        public Task<bool> VerifyResourceAvailabilityFromNode(string nodeId, string hash) =>
+        public Task<bool> VerifyResourceAvailabilityFromNodeAsync(string nodeId, string hash) =>
             CurrentApiVersion switch
             {
                 ApiVersions.v0_3 => client.ApiV0_3NodesStewardshipGetAsync(nodeId, hash),
